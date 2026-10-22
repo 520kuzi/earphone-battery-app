@@ -15,7 +15,7 @@ jobs:
       - name: 安装工程生成工具 (XcodeGen)
         run: brew install xcodegen
 
-      - name: 生成 Xcode 项目工程
+      - name: 生成兼容格式的 Xcode 项目工程
         run: xcodegen generate
 
       - name: 编译可执行程序 (.app)
