@@ -1,0 +1,45 @@
+name: Build iOS IPA
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build IPA on macOS
+    runs-on: macos-14
+
+    steps:
+      - name: 检出仓库代码
+        uses: actions/checkout@v4
+
+      - name: 安装工程生成工具 (XcodeGen)
+        run: brew install xcodegen
+
+      - name: 生成 Xcode 项目工程
+        run: xcodegen generate
+
+      - name: 编译可执行程序 (.app)
+        run: |
+          xcodebuild clean build \
+            -project EarphoneBattery.xcodeproj \
+            -scheme EarphoneBattery \
+            -sdk iphoneos \
+            -configuration Release \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO \
+            CONFIGURATION_BUILD_DIR="./build"
+
+      - name: 打包生成标准 IPA
+        run: |
+          mkdir -p Payload
+          cp -r ./build/EarphoneBattery.app Payload/
+          zip -r -q EarphoneBattery.ipa Payload
+          echo "打包完成！"
+
+      - name: 发布下载产物 (Artifact)
+        uses: actions/upload-artifact@v4
+        with:
+          name: EarphoneBattery-IPA
+          path: EarphoneBattery.ipa
+          retention-days: 7
