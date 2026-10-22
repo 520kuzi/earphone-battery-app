@@ -1,6 +1,7 @@
 name: EarphoneBattery
 options:
   bundleIdPrefix: com.battery
+  xcodeVersion: "15.0"
 targets:
   EarphoneBattery:
     type: application
