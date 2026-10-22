@@ -6,16 +6,19 @@ on:
 jobs:
   build:
     name: Build IPA on macOS
-    runs-on: macos-14
+    runs-on: macos-15
 
     steps:
       - name: 检出仓库代码
         uses: actions/checkout@v4
 
+      - name: 检查 Xcode 版本
+        run: xcodebuild -version
+
       - name: 安装工程生成工具 (XcodeGen)
         run: brew install xcodegen
 
-      - name: 生成兼容格式的 Xcode 项目工程
+      - name: 生成 Xcode 项目工程
         run: xcodegen generate
 
       - name: 编译可执行程序 (.app)
