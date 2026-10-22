@@ -1,0 +1,20 @@
+name: EarphoneBattery
+options:
+  bundleIdPrefix: com.battery
+targets:
+  EarphoneBattery:
+    type: application
+    platform: iOS
+    deploymentTarget: "15.0"
+    sources:
+      - path: AppMain.swift
+      - path: BatteryManager.swift
+    info:
+      path: Info.plist
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.battery.earphone
+        INFOPLIST_FILE: Info.plist
+        CODE_SIGN_IDENTITY: ""
+        CODE_SIGNING_REQUIRED: NO
+        CODE_SIGNING_ALLOWED: NO
